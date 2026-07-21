@@ -1,0 +1,46 @@
+type Query {
+    "단건 게시글 조회"
+    post(id: ID!): Post
+
+    "페이지 단위 게시글 목록 조회"
+    posts(page: Int = 0, size: Int = 10): PostPage!
+}
+
+type Mutation {
+    "게시글 생성"
+    createPost(input: CreatePostInput!): Post!
+
+    "게시글 수정"
+    updatePost(id: ID!, input: UpdatePostInput!): Post!
+
+    "게시글 삭제"
+    deletePost(id: ID!): Boolean!
+}
+
+type Post {
+    id: ID!
+    title: String!
+    content: String!
+    author: String!
+    createdAt: String!
+    updatedAt: String!
+}
+
+type PostPage {
+    content: [Post!]!
+    page: Int!
+    size: Int!
+    totalElements: Int!
+    totalPages: Int!
+}
+
+input CreatePostInput {
+    title: String!
+    content: String!
+    author: String!
+}
+
+input UpdatePostInput {
+    title: String!
+    content: String!
+}
