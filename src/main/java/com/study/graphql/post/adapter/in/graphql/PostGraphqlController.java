@@ -33,31 +33,31 @@ class PostGraphqlController {
         this.getPostListQuery = getPostListQuery;
     }
 
-    @QueryMapping
+    @QueryMapping(name = "post")
     PostResponse post(@Argument Long id) {
         return PostResponse.from(getPostQuery.getPost(id));
     }
 
-    @QueryMapping
+    @QueryMapping(name = "posts")
     PostPageResponse posts(@Argument Integer page, @Argument Integer size) {
         return PostPageResponse.from(getPostListQuery.getPosts(
                 page != null ? page : 0,
                 size != null ? size : 10));
     }
 
-    @MutationMapping
+    @MutationMapping(name = "createPost")
     PostResponse createPost(@Argument CreatePostInput input) {
         CreatePostCommand command = new CreatePostCommand(input.title(), input.content(), input.author());
         return PostResponse.from(createPostUseCase.createPost(command));
     }
 
-    @MutationMapping
+    @MutationMapping(name = "updatePost")
     PostResponse updatePost(@Argument Long id, @Argument UpdatePostInput input) {
         UpdatePostCommand command = new UpdatePostCommand(id, input.title(), input.content());
         return PostResponse.from(updatePostUseCase.updatePost(command));
     }
 
-    @MutationMapping
+    @MutationMapping(name = "deletePost")
     boolean deletePost(@Argument Long id) {
         deletePostUseCase.deletePost(id);
         return true;
